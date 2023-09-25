@@ -36,7 +36,5 @@ export async function createSessionHandeller(
     { expiresIn: config.accessTokenTtl }
   );
 
-  return res
-    .sendStatus(200)
-    .json({ accessToken: accessToken, refrehTokenToken: refrehTokenToken });
+  return res.send({ accessToken, refrehTokenToken });
 }
