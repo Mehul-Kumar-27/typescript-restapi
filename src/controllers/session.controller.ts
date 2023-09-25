@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { validateUserPassowrd } from "../services/user_service";
 import { createSession } from "../services/session.services";
+import config from "../configurations/default";
+import { signJWT } from "../utils/jwt.utils";
+import { verify } from "crypto";
 
 export async function createSessionHandeller(
   req: Request,
@@ -21,5 +24,19 @@ export async function createSessionHandeller(
 
   // create access tokens
 
+  const accessToken = signJWT(
+    { ...user, session: session._id },
+    { expiresIn: config.accessTokenTtl }
+  );
+
   // Create refresh tokens
+
+  const refrehTokenToken = signJWT(
+    { ...user, session: session._id },
+    { expiresIn: config.accessTokenTtl }
+  );
+
+  return res
+    .sendStatus(200)
+    .json({ accessToken: accessToken, refrehTokenToken: refrehTokenToken });
 }
