@@ -32,3 +32,12 @@ export async function validateUserPassowrd({
     return omit(user.toJSON(), "password");
   }
 }
+
+export async function getAllUsers() {
+  try {
+    const users = await UserModel.find();
+    return users.map((user) => omit(user.toJSON(), "password"));
+  } catch (e: any) {
+    throw new Error(e);
+  }
+}
