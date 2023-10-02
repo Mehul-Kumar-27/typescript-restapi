@@ -5,7 +5,7 @@ import logger from "../utils/logger";
 
 async function connectToDataBase() {
   const dbURI: string = config.dbURI;
-
+  logger.info(dbURI)
   await mongoose
     .connect(dbURI)
     .then(() => {
